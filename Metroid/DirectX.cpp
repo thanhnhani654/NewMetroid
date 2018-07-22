@@ -2,7 +2,7 @@
 
 // Khai báo các biến toàn cục
 #pragma region Define
-Sprite DirectX::sprites;
+
 #pragma endregion
 
 #pragma region Initialize
@@ -46,12 +46,12 @@ bool DirectX::DirectX_Initialize(HWND hwnd)
 	d3ddv->CreateOffscreenPlainSurface(100, 100, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &surface, NULL);
 
 	//Lấy biến chứa thông số DirectX cho Sprite
-	sprites.GetDevice(d3ddv);
-	sprites.Initialize();
+	Sprite::GetDevice(d3ddv);
+	Sprite::Initialize();
 	
 	//Debug
-	sprites.PrintSpritePos(2);
-	sprites.PrintAnimationClip(2);
+	//Sprite::PrintSpritePos(0);
+	//Sprite::PrintAnimationClip(0);
 
 	return true;
 }
@@ -59,9 +59,7 @@ bool DirectX::DirectX_Initialize(HWND hwnd)
 //Khởi tạo các giá trị ban đầu của Game
 bool DirectX::Game_Initialize()
 {
-	//testSprite.Initialize();
-	testSprite.SetAnimation("idle");
-	testSprite2.SetAnimation("idle");
+	gameScene.Initialize();
 	return true;
 }
 
@@ -82,13 +80,13 @@ void DirectX::GameLoop(float deltatime)
 //Vòng lặp nhận sự kiện từ người chơi
 void DirectX::UpdateInput(float deltatime)
 {
-
+	gameScene.UpdateInput(deltatime);
 }
 
 //Vòng lặp tính toán logic trong game
 void DirectX::Update(float deltatime)
 {
-
+	gameScene.Update(deltatime);
 }
 
 //Vòng lặp để vẽ
@@ -100,8 +98,7 @@ void DirectX::DrawLoop()
 	{
 		d3ddv->ColorFill(surface, NULL, D3DCOLOR_XRGB(255, 0, 0));
 		//Viết code ở đây
-		testSprite.Render(64, 200);
-		testSprite2.Render(120, 200);
+		gameScene.Draw();
 
 		d3ddv->EndScene();
 	}

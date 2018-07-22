@@ -56,7 +56,7 @@ public:
 	static LPDIRECT3DTEXTURE9 LoadSprite(LPCWSTR Path, int Width, int Height);
 	static void Initialize();
 
-	void GetDevice(LPDIRECT3DDEVICE9 d3ddv);
+	static void GetDevice(LPDIRECT3DDEVICE9 d3ddv);
 
 	void Render(float X, float Y);
 	void Next();

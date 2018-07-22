@@ -2,6 +2,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "Sprite.h"
+#include "GameScene.h"
 
 class DirectX
 {
@@ -18,13 +19,10 @@ private:
 	//void CollisionProcess(float deltatime);
 	void Update(float deltatime);
 	void DrawLoop();
-public:
-	static Sprite sprites;
 
+	GameScene gameScene;
+public:
 	bool Initialize(HWND hwnd);
 	void GameLoop(float deltatime);
 	bool GameRelease();
-
-	Sprite testSprite;
-	Sprite testSprite2;
 };
