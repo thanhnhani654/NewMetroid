@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<data-set xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<SPRITE>
+		<Name>Walk</Name>
+		<Count>4</Count>
+		<Clip0>s2_18</Clip0>
+		<Clip1>s2_19</Clip1>
+		<Clip2>s2_20</Clip2>
+		<Clip3>s2_21</Clip3>
+		<Clip4>0</Clip4>
+		<Clip5>0</Clip5>
+		<Clip6>0</Clip6>
+		<Clip7>0</Clip7>
+		<Clip8>0</Clip8>
+		<Clip9>0</Clip9>
+	</SPRITE>
+	<SPRITE>
+		<Name>idle</Name>
+		<Count>1</Count>
+		<Clip0>s2_4</Clip0>
+		<Clip1>0</Clip1>
+		<Clip2>0</Clip2>
+		<Clip3>0</Clip3>
+		<Clip4>0</Clip4>
+		<Clip5>0</Clip5>
+		<Clip6>0</Clip6>
+		<Clip7>0</Clip7>
+		<Clip8>0</Clip8>
+		<Clip9>0</Clip9>
+	</SPRITE>
+</data-set>
