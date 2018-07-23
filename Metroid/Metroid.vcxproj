@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\MoveComponent.cpp" />
     <ClCompile Include="Controllable.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Utility\TagMethod.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\MoveComponent.h" />
     <ClInclude Include="Controllable.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="GameObject\GameObject.h" />

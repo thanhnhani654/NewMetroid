@@ -1,15 +1,21 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
+
+enum eTag
+{
+	Player
+};
 
 class Tag
 {
 private: 
-	vector<string> tags;
+	vector<eTag> tags;
 public:
-	void AddTag(string tag);
-	bool isHasTag(string tag);
-	void EraseTag(string tag);
+	void AddTag(eTag tag);
+	bool isHasTag(eTag tag);
+	void EraseTag(eTag tag);
 };

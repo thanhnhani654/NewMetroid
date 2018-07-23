@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{0b9db0c6-fea9-44d7-93bc-55d59f814eaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Component">
+      <UniqueIdentifier>{e27d5831-04a9-409a-84c9-c96342c253e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{4dd83fab-42ea-4d0e-975a-e4b1b429096f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +60,9 @@
     <ClCompile Include="Utility\TagMethod.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Component\MoveComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX.h">
@@ -76,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Utility\TagMethod.h">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MoveComponent.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

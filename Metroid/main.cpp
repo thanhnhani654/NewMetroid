@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int GameLoop(DirectX* directX);
+int GameLoop(DirectX& directX);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 int WinAPI_Initialize(HWND &hwnd, HINSTANCE hInstance);
 void ShowFPS(bool show, float deltatime);
@@ -21,11 +21,10 @@ int main()
 	HWND hwnd = FindWindowA(NULL, title);
 	HWND WinAPIHwnd;
 	HINSTANCE hInstance = (HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE);
-	DirectX* directX;
-	directX = new DirectX();
-
+	DirectX directX;
+	
 	WinAPI_Initialize(hwnd, hInstance);
-	directX->Initialize(hwnd);
+	directX.Initialize(hwnd);
 
 
 	MSG msg;
@@ -43,14 +42,14 @@ int main()
 		GameLoop(directX);
 	}
 
-	directX->GameRelease();
+	directX.GameRelease();
 
 	return msg.wParam;
 
 	system("pause");
 }
 
-int GameLoop(DirectX* directX)
+int GameLoop(DirectX& directX)
 {
 	//Tính DeltaTime
 	float deltatime = GetDeltaTime();
@@ -61,7 +60,7 @@ int GameLoop(DirectX* directX)
 		Sleep(33.3333 - deltatime);
 
 	// Chạy game
-	directX->GameLoop(deltatime);
+	directX.GameLoop(deltatime);
 	return 1;
 }
 

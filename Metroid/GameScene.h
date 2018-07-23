@@ -1,9 +1,10 @@
 #pragma once
-
+#include "GameObject\GameObject.h"
 
 class GameScene
 {
 private:
+	GameObject test;
 public:
 
 	void Initialize();
