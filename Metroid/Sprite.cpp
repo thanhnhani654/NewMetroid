@@ -95,13 +95,13 @@ void Sprite::Render(float X, float Y)
 	_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 	D3DXVECTOR3 position(X, Y, 0);
-
+	
 	D3DXMATRIX mt;
 	D3DXMatrixIdentity(&mt);
 	mt._11 = 1.0f;
 	mt._22 = -1.0f;
-	mt._41 = 0;
-	mt._42 = 320 + 25 + 16;
+	mt._41 = Camera::getInstance()->position.x;					//Viewport X
+	mt._42 = 320 + 25 + 16 + Camera::getInstance()->position.y;		//Viewport Y
 	D3DXVECTOR4 vp_pos;
 
 	
@@ -133,7 +133,7 @@ void Sprite::Render(float X, float Y)
 
 
 	//offset
-	D3DXVECTOR3 center(currentSprite->w, currentSprite->h, 0);
+	D3DXVECTOR3 center(currentSprite->w / 2, currentSprite->h / 2, 0);
 	////////////////////////
 
 	hr = _SpriteHandler->Draw(

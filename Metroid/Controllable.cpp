@@ -17,14 +17,13 @@ void Controllable::OnKeyDown(int Keycode)
 {
 }
 
-void Controllable::_InitKeyboard(HWND hWnd, HINSTANCE hInstance)
+void Controllable::_InitKeyboard(HWND& hWnd, HINSTANCE& hInstance)
 {
-	HRESULT
-		hr = DirectInput8Create
+	HRESULT hr = DirectInput8Create
 		(
 			hInstance,
 			DIRECTINPUT_VERSION,
-			IID_IDirectInput8, (VOID**)&di, NULL
+			IID_IDirectInput8, (VOID**)&(Controllable::di), NULL
 		);
 	hr = di->CreateDevice(GUID_SysKeyboard, &Keyboard, NULL);
 	hr = Keyboard->SetDataFormat(&c_dfDIKeyboard);

@@ -8,7 +8,7 @@ void GameScene::Initialize()
 
 void GameScene::UpdateInput(float deltatime)
 {
-
+	Camera::getInstance()->UpdateInput(deltatime);
 }
 
 void GameScene::Update(float deltatime)

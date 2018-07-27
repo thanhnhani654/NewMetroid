@@ -2,12 +2,13 @@
 #include <Windows.h>
 #include "DirectX.h"
 #include <time.h>
+#include "Controllable.h"
 
 using namespace std;
 
 int GameLoop(DirectX& directX);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-int WinAPI_Initialize(HWND &hwnd, HINSTANCE hInstance);
+int WinAPI_Initialize(HWND &hwnd, HINSTANCE& hInstance);
 void ShowFPS(bool show, float deltatime);
 float GetDeltaTime();
 
@@ -19,13 +20,19 @@ int main()
 	char title[500];  // to hold title
 	GetConsoleTitleA(title, 500);
 	HWND hwnd = FindWindowA(NULL, title);
-	HWND WinAPIHwnd;
-	HINSTANCE hInstance = (HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE);
+	//HWND WinAPIHwnd;
+	HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(NULL);
+	//HINSTANCE hInstance = (HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE);
+	if (hInstance == 0)
+	{
+		cout << "Error: " << GetLastError();
+	}
 	DirectX directX;
 	
 	WinAPI_Initialize(hwnd, hInstance);
 	directX.Initialize(hwnd);
 
+	Controllable::_InitKeyboard(hwnd, hInstance);
 
 	MSG msg;
 	int done = 0;
@@ -65,7 +72,7 @@ int GameLoop(DirectX& directX)
 }
 
 
-int WinAPI_Initialize(HWND &hwnd, HINSTANCE hInstance)
+int WinAPI_Initialize(HWND &hwnd, HINSTANCE& hInstance)
 {		
 	WNDCLASS wc;
 

@@ -155,6 +155,7 @@
     <ClCompile Include="Component\MoveComponent.cpp" />
     <ClCompile Include="Controllable.cpp" />
     <ClCompile Include="DirectX.cpp" />
+    <ClCompile Include="GameObject\Camera.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Component\MoveComponent.h" />
     <ClInclude Include="Controllable.h" />
     <ClInclude Include="DirectX.h" />
+    <ClInclude Include="GameObject\Camera.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="pugixml-1.8\src\pugixml.hpp" />

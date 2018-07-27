@@ -8,6 +8,7 @@
 #include <vector>
 #include "pugixml-1.8\src\pugixml.hpp"
 #include <string>
+#include "GameObject\Camera.h"
 
 using namespace std;
 
