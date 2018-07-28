@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<data-set xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<SPRITE>
+		<ID>0</ID>
+		<X>0</X>
+		<Y>0</Y>
+		<Width>16</Width>
+		<Height>16</Height>
+	</SPRITE>
+	<SPRITE>
+		<ID>1</ID>
+		<X>0</X>
+		<Y>16</Y>
+		<Width>16</Width>
+		<Height>16</Height>
+	</SPRITE>
+</data-set>
