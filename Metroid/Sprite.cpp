@@ -54,23 +54,23 @@ LPDIRECT3DTEXTURE9 Sprite::LoadSprite(LPCWSTR Path, int Width, int Height)
 void Sprite::Initialize()
 {
 	//Load Image
-	_Image  = LoadSprite(TEXT("Resources/map.png"), 240, 320);
+	_Image = LoadSprite(TEXT("Resources/map.png"), 240, 320);
 	_Image2 = LoadSprite(TEXT("Resources/Character.bmp"), 574, 1009);
-	//_Image3 = ...
+	_Image3 = LoadSprite(TEXT("Resources/Enemies.bmp"), 561, 337);
 	//_Image4 = ...
 	//_Image5 = ...
 
 	//Load Sprite
 	LoadSpritePos("Resources/Sprite_Tiles_Sheet.xml");
 	LoadSpritePos("Resources/Sprite_Character_Sheet.xml");
-	//LoadSpritePos("Resources/...");
+	LoadSpritePos("Resources/Sprite_Enemy_Sheet.xml");
 	//LoadSpritePos("Resources/...");
 	//LoadSpritePos("Resources/...");
 
 	//Load Animation
-	//LoadAnimClips("Resources/...", _Image1);
+	LoadAnimClips("Resources/Animation_Clip_Tiles.xml", _Image);
 	LoadAnimClips("Resources/Animation_Clip_Character.xml", _Image2);
-	//LoadAnimClips("Resources/...", _Image3);
+	LoadAnimClips("Resources/Animation_Clip_Enemy.xml", _Image3);
 	//LoadAnimClips("Resources/...", _Image4);
 	//LoadAnimClips("Resources/...", _Image5);
 	
@@ -100,7 +100,7 @@ void Sprite::Render(float X, float Y)
 	D3DXMatrixIdentity(&mt);
 	mt._11 = 1.0f;
 	mt._22 = -1.0f;
-	mt._41 = Camera::getInstance()->position.x;					//Viewport X
+	mt._41 = -Camera::getInstance()->position.x;					//Viewport X
 	mt._42 = 320 + 25 + 16 + Camera::getInstance()->position.y;		//Viewport Y
 	D3DXVECTOR4 vp_pos;
 

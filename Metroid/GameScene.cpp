@@ -3,7 +3,7 @@
 void GameScene::Initialize()
 {
 	test.Initialize();
-	test.sprite.get()->SetAnimation("Walk");
+	test.sprite.get()->SetAnimation("anim_s1_0");
 }
 
 void GameScene::UpdateInput(float deltatime)
