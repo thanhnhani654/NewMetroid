@@ -63,6 +63,15 @@
     <ClCompile Include="Component\MoveComponent.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Creature.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\HPComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Samus.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX.h">
@@ -88,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="Component\MoveComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Creature.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\HPComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Samus.h">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

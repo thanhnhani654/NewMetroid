@@ -1,9 +1,9 @@
 #include "MoveComponent.h"
 
-void MoveComponent::Initialize(D3DXVECTOR2 &position, D3DXVECTOR2 &velocity)
+void MoveComponent::Initialize(D3DXVECTOR2* position, D3DXVECTOR2* velocity)
 {
-	this->position = &position;
-	this->velocity = &velocity;
+	this->position = position;
+	this->velocity = velocity;
 	speed = 5;
 	bGravity = false;
 	gravity = 10;
@@ -68,5 +68,5 @@ void MoveComponent::TinhVanTocDuaTrenPhuongTrinhTheoThoiGian(float ptx, float pt
 
 void MoveComponent::UpdateMovement(float deltatime)
 {
-
+	
 }

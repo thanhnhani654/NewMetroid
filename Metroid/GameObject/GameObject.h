@@ -34,6 +34,8 @@ private:
 		parentObject = &object;
 	}
 
+	static void DestroyProcess();					//Dùng để xóa object nào được đánh dấu tử
+
 public:
 	//Sprite
 	std::unique_ptr<Sprite> sprite;
@@ -44,6 +46,11 @@ public:
 	D3DXVECTOR2 GetPosition()
 	{
 		return position;
+	}
+
+	D3DXVECTOR2* GetPosition_Ptr()
+	{
+		return &position;
 	}
 
 	void GetPosition_Ref(D3DXVECTOR2 &pos)			//Dùng cho trường hợp cần khi position thay đổi thì pos thay đôi luôn						
@@ -65,6 +72,11 @@ public:
 	D3DXVECTOR2 GetVelocity()
 	{
 		return velocity;
+	}
+
+	D3DXVECTOR2* GetVelocity_Ptr()
+	{
+		return &velocity;
 	}
 
 	D3DXVECTOR2 GetVelocity_Ref(D3DXVECTOR2 &vec)		//Dùng cho trường hợp cần khi position thay đổi thì pos thay đôi luôn
@@ -145,6 +157,5 @@ public:
 	virtual void Destroy();							//Dùng để xóa những con trỏ bên trong
 
 	GameObject* FindObjectWithTag(eTag tag);
-	
-	static void DestroyProcess();					//Dùng để xóa object nào được đánh dấu tử
+
 };

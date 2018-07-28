@@ -20,7 +20,7 @@ int main()
 	GetConsoleTitleA(title, 500);
 	HWND hwnd = FindWindowA(NULL, title);
 	HWND WinAPIHwnd;
-	HINSTANCE hInstance = (HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE);
+	HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(NULL);
 	DirectX directX;
 	
 	WinAPI_Initialize(hwnd, hInstance);

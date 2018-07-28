@@ -152,10 +152,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\HPComponent.cpp" />
     <ClCompile Include="Component\MoveComponent.cpp" />
     <ClCompile Include="Controllable.cpp" />
     <ClCompile Include="DirectX.cpp" />
+    <ClCompile Include="GameObject\Creature.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="GameObject\Samus.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pugixml-1.8\src\pugixml.cpp" />
@@ -163,10 +166,13 @@
     <ClCompile Include="Utility\TagMethod.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\HPComponent.h" />
     <ClInclude Include="Component\MoveComponent.h" />
     <ClInclude Include="Controllable.h" />
     <ClInclude Include="DirectX.h" />
+    <ClInclude Include="GameObject\Creature.h" />
     <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="GameObject\Samus.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="pugixml-1.8\src\pugixml.hpp" />
     <ClInclude Include="Sprite.h" />

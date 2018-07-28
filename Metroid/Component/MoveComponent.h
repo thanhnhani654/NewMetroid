@@ -95,7 +95,7 @@ public:
 
 #pragma endregion
 
-	void Initialize(D3DXVECTOR2 &position, D3DXVECTOR2 &velocity);
+	void Initialize(D3DXVECTOR2 *position, D3DXVECTOR2 *velocity);
 	void MoveUp();					//Chỉ dùng khi bGravity False
 	void MoveDown();				//Chỉ dùng khi bGravity False
 	void Jump();					//Chỉ dùng khi bGravity True

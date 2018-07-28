@@ -78,6 +78,9 @@ void Sprite::Initialize()
 
 void Sprite::Render(float X, float Y)
 {
+	if (currentAnim.name == "null")
+		return;
+
 	if (currentSprite == nullptr)
 	{
 		//cout << "Null Animation.					Call From Render" <<endl;
@@ -270,7 +273,6 @@ void Sprite::LoadAnimClips(char* path, LPDIRECT3DTEXTURE9 image)
 			animClips.push_back(*tempAnimClip);
 		}
 	}
-	int a = 0;
 }
 
 AnimationClip Sprite::FindAnimByName(string name)
@@ -289,13 +291,16 @@ AnimationClip Sprite::FindAnimByName(string name)
 void Sprite::SetAnimation(string name)
 {	
 	AnimationClip temp;
-	temp = FindAnimByName(name);
-	if (temp.name == "null")
+	//temp = FindAnimByName(name);
+	this->currentAnim = FindAnimByName(name);
+	//if (temp.name == "null")
+	if (currentAnim.name == "null")
 	{
 		cout << "Set Animation Error. Wrong Animation name!";
 		return;
 	}
-	currentAnim = temp;
+	//currentAnim = temp;
+
 	//currentAnim.name = "Walk";
 
 	index = 0;

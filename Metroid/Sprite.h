@@ -26,6 +26,20 @@ struct AnimationClip
 	LPDIRECT3DTEXTURE9 image;
 	int clipCount;
 	SpritePos Clip[10];
+	AnimationClip()
+	{
+		name = "null";
+		image = nullptr;
+		clipCount = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			Clip[i].id = "nullptr";
+			Clip[i].h = 0;
+			Clip[i].w = 0;
+			Clip[i].x = 0;
+			Clip[i].y = 0;
+		}
+	}
 };
 
 class Sprite
