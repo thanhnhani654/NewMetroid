@@ -50,8 +50,8 @@ bool DirectX::DirectX_Initialize(HWND hwnd)
 	Sprite::Initialize();
 	
 	//Debug
-	//Sprite::PrintSpritePos(0);
-	//Sprite::PrintAnimationClip(0);
+	Sprite::PrintSpritePos(2);
+	Sprite::PrintAnimationClip(2);
 
 	return true;
 }

@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "DirectX.h"
 #include <time.h>
+#include "Controllable.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ int main()
 	
 	WinAPI_Initialize(hwnd, hInstance);
 	directX.Initialize(hwnd);
-
+	Controllable::_InitKeyboard(hwnd, hInstance);
 
 	MSG msg;
 	int done = 0;
@@ -53,11 +54,11 @@ int GameLoop(DirectX& directX)
 {
 	//Tính DeltaTime
 	float deltatime = GetDeltaTime();
-
 	ShowFPS(false, deltatime);
 
-	if (deltatime < 33.3333)
-		Sleep(33.3333 - deltatime);
+	if (deltatime < 0.0333)
+		Sleep((0.0333 - deltatime)*1000);
+	
 
 	// Chạy game
 	directX.GameLoop(deltatime);
@@ -124,7 +125,7 @@ void ShowFPS(bool show, float deltatime)
 	static float time;
 	static int countFPS;
 	time += deltatime;
-	if (time >= 1000)
+	if (time >= 1)
 	{
 		cout << countFPS << endl;
 		time = 0;
@@ -142,5 +143,5 @@ float GetDeltaTime()
 	float deltatime = currentTime - lastTime;
 	lastTime = clock();
 
-	return deltatime;
+	return deltatime / 1000;
 }

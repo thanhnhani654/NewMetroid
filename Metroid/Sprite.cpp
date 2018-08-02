@@ -68,7 +68,7 @@ void Sprite::Initialize()
 	//LoadSpritePos("Resources/...");
 
 	//Load Animation
-	//LoadAnimClips("Resources/...", _Image1);
+	LoadAnimClips("Resources/Animation_Clip_Tiles.xml", _Image);
 	LoadAnimClips("Resources/Animation_Clip_Character.xml", _Image2);
 	//LoadAnimClips("Resources/...", _Image3);
 	//LoadAnimClips("Resources/...", _Image4);
@@ -107,36 +107,29 @@ void Sprite::Render(float X, float Y)
 	mt._42 = 320 + 25 + 16;
 	D3DXVECTOR4 vp_pos;
 
-	
-	/*
+	D3DXVec3Transform(&vp_pos, &position, &mt);
+	//World Position
+	D3DXVECTOR3 p;
+
 	//Flip
-	bool _Flip;
+	int flipping = 1;
 	D3DXMATRIX my;
 	D3DXMatrixIdentity(&my);
 	if (_Flip)
 	{
-		my._11 = -1.0f;
+		my._11 = -1.0f;	
 		_SpriteHandler->SetTransform(&my);
+		p = D3DXVECTOR3(vp_pos.x * (-1), vp_pos.y, 0);
 	}
 	else
 	{
-		my._11 = 1.0f;
+		my._11 = 1.0f;	
 		_SpriteHandler->SetTransform(&my);
+		p = D3DXVECTOR3(vp_pos.x, vp_pos.y, 0);
 	}
-	my._11 = 2.0f;
-	my._22 = 2.0f;
-	my._33 = 1.0f;
-	my._44 = 1.0f;
-	_SpriteHandler->SetTransform(&my);
-	*/
-
-	D3DXVec3Transform(&vp_pos, &position, &mt);
-
-	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, 0);
-
 
 	//offset
-	D3DXVECTOR3 center(currentSprite->w, currentSprite->h, 0);
+	D3DXVECTOR3 center(currentSprite->w / 2, currentSprite->h / 2, 0);
 	////////////////////////
 
 	hr = _SpriteHandler->Draw(
@@ -371,4 +364,19 @@ void Sprite::PrintAnimationClip(int mode)
 		break;
 	}
 	cout << "========================================================================================================================" << endl << endl;
+}
+
+void Sprite::FlipLeft()
+{
+	_Flip = true;
+}
+
+void Sprite::FlipRight()
+{
+	_Flip = false;
+}
+
+bool Sprite::isFilpLeft()				
+{
+	return _Flip;
 }

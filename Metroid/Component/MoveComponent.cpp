@@ -5,6 +5,7 @@ void MoveComponent::Initialize(D3DXVECTOR2* position, D3DXVECTOR2* velocity)
 	this->position = position;
 	this->velocity = velocity;
 	speed = 5;
+	limitedSpeed = 1000;
 	bGravity = false;
 	gravity = 10;
 }
@@ -68,5 +69,6 @@ void MoveComponent::TinhVanTocDuaTrenPhuongTrinhTheoThoiGian(float ptx, float pt
 
 void MoveComponent::UpdateMovement(float deltatime)
 {
-	
+	position->x += velocity->x * deltatime;
+	position->y += velocity->y * deltatime;
 }

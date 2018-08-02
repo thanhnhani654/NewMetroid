@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Box2D.cpp" />
+    <ClCompile Include="Component\Collision.cpp" />
     <ClCompile Include="Component\HPComponent.cpp" />
     <ClCompile Include="Component\MoveComponent.cpp" />
     <ClCompile Include="Controllable.cpp" />
@@ -166,6 +168,8 @@
     <ClCompile Include="Utility\TagMethod.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Box2D.h" />
+    <ClInclude Include="Component\Collision.h" />
     <ClInclude Include="Component\HPComponent.h" />
     <ClInclude Include="Component\MoveComponent.h" />
     <ClInclude Include="Controllable.h" />

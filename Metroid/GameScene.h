@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject\GameObject.h"
 #include "GameObject\Samus.h"
+#include <vector>
 
 class GameScene
 {
 private:
-	GameObject test;
 	Samus samus;
+	std::vector<GameObject*> object;
 public:
 
 	void Initialize();

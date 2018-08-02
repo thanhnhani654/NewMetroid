@@ -62,6 +62,7 @@ protected:
 	int index;
 	int frameRate;							//Điều chỉnh tốc độ chuyển hình theo tỉ lệ 1/1, 1/2, 1/3, 1/4 ... tương ứng với frameRate 1,2,3,4...
 	int countFrame;
+	bool _Flip;
 public:
 
 
@@ -85,4 +86,7 @@ public:
 	//Debug
 	static void PrintSpritePos(int mode);			// mode{1(Group), 2(Sheet)}
 	static void PrintAnimationClip(int mode);		// mode{1(Group), 2(Sheet)}
+	void FlipLeft();
+	void FlipRight();
+	bool isFilpLeft();								// Left:True		Right: False
 };

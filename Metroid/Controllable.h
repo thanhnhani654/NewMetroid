@@ -18,7 +18,7 @@ private:
 	static LPDIRECTINPUT8 di;
 public:
 
-	void _InitKeyboard(HWND hWnd, HINSTANCE hInstance);
+	static void _InitKeyboard(HWND hWnd, HINSTANCE hInstance);
 
 	void _ProcessKeyBoard();
 

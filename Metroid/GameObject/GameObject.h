@@ -154,6 +154,7 @@ public:
 	virtual void UpdateInput(float deltatime);
 	virtual void Update(float deltatime);
 	virtual void Draw();
+	virtual void OnCollision(GameObject* object) {}
 	virtual void Destroy();							//Dùng để xóa những con trỏ bên trong
 
 	GameObject* FindObjectWithTag(eTag tag);
