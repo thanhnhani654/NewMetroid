@@ -31,6 +31,7 @@ void Samus::UpdateInput(float deltatime)
 void Samus::Update(float deltatime)
 {
 	GetMoveComponent()->UpdateMovement(deltatime);
+	UpdateState(deltatime);
 	this;
 }
 
@@ -86,29 +87,31 @@ void Samus::OnKeyDown(int Keycode)
 	switch (Keycode)
 	{
 	case DIK_SPACE:
-		//debug double jump
-		static int count = 0;
-		if (!bFlying)
+
+		if (!bFlying && !bCrouch)
 		{			
 			GetMoveComponent()->Jump();
 			
 			cout << "Jumping" << endl;
-			//////////////////////////
-			count++;
-			if (count > 1)
-				cout << "Error: Double Jump!!!" << endl;
-			//////////////////////////
 			bFlying = true;
 		}
-		else
-			count = 0;
+
+		if (bCrouch)
+			bCrouch = false;
+
 		break;
+	case DIK_S:
+		if (!bFlying)
+		{
+			bCrouch = true;
+		}
 	}
 }
 
 //Animation Manager
 void Samus::UpdateState(float deltatime)
 {
+	_prevState = _state;
 	switch (_state)
 	{
 	case eSamusState::Stand:
@@ -121,6 +124,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::StandLookUp;
 		else if (!bAttack == false)
 			_state = eSamusState::StandAttack;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::StandAttack:
@@ -133,6 +141,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::StandLookUpAttack;
 		else if (!bAttack == true)
 			_state = eSamusState::Stand;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::StandLookUp:
@@ -145,6 +158,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::Stand;
 		else if (!bAttack == false)
 			_state = eSamusState::StandLookUpAttack;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::StandLookUpAttack:
@@ -157,6 +175,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::StandAttack;
 		else if (!bAttack == true)
 			_state = eSamusState::StandLookUp;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::MovingOnGround:
@@ -170,6 +193,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::MovingOnGroundLookUp;
 		else if (!bAttack == false)
 			_state = eSamusState::MovingOnGroundAtack;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::MovingOnGroundAtack:
@@ -182,6 +210,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::MovingOnGroundLookUpAttack;
 		else if (!bAttack == true)
 			_state = eSamusState::MovingOnGround;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::MovingOnGroundLookUp:
@@ -194,7 +227,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::MovingOnGround;
 		else if (!bAttack == false)
 			_state = eSamusState::MovingOnGroundLookUpAttack;
-		#pragma endregion
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		break;
 	case eSamusState::MovingOnGroundLookUpAttack:
 		#pragma region Condition Checker
@@ -206,6 +243,11 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::MovingOnGroundAtack;
 		else if (!bAttack == true)
 			_state = eSamusState::MovingOnGroundLookUp;
+		else if (!bCrouch == false)
+		{
+			_state = eSamusState::Rolling;
+			box.SetSize(16, 16);
+		}
 		#pragma endregion
 		break;
 	case eSamusState::Jump:
@@ -271,6 +313,87 @@ void Samus::UpdateState(float deltatime)
 			_state = eSamusState::JumpAttack;
 		#pragma endregion
 		break;
+	case eSamusState::Rolling:
+		#pragma region Condition Checker
+		if (!bFlying == false)
+		{
+			bool checker = false;
+			box.SetSize(16, 32);
+			SetPosition(GetPosition().x, GetPosition().y + 16);
+			for (int i = 0; i < Box2D::listBox.size(); i++)
+			{
+				if (&box == &Box2D::listBox[i].get())
+					continue;
+				if (Box2D::listBox[i].get().getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
+					if (Collision::getInstance()->IsIntersection(Box2D::listBox[i].get().GetBox(), box.GetBox()))
+					{
+						checker = true;
+						break;
+					}
+			}
+			if (!checker)
+				_state = eSamusState::Stand;
+			else
+			{
+				box.SetSize(16, 16);
+				SetPosition(GetPosition().x, GetPosition().y - 16);
+				bCrouch = true;
+			}
+		}
+		else if (!bAttack == false)
+		{
+			bool checker = false;
+			box.SetSize(16, 32);
+			SetPosition(GetPosition().x, GetPosition().y + 16);
+			for (int i = 0; i < Box2D::listBox.size(); i++)
+			{
+				if (&box == &Box2D::listBox[i].get())
+					continue;
+				if (Box2D::listBox[i].get().getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
+					if (Collision::getInstance()->IsIntersection(Box2D::listBox[i].get().GetBox(), box.GetBox()))
+					{
+						checker = true;
+						break;
+					}
+			}
+			if (!checker)
+				_state = eSamusState::StandAttack;
+			else
+			{
+				box.SetSize(16, 16);
+				SetPosition(GetPosition().x, GetPosition().y - 16);
+				bCrouch = true;
+			}
+		}
+		else if (!bCrouch == true)
+		{
+			bool checker = false;
+			box.SetSize(16, 32);
+			SetPosition(GetPosition().x, GetPosition().y + 16);
+			for (int i = 0; i < Box2D::listBox.size(); i++)
+			{
+				if (&box == &Box2D::listBox[i].get())
+					continue;
+				if (Box2D::listBox[i].get().getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
+					if (Collision::getInstance()->IsIntersection(Box2D::listBox[i].get().GetBox(), box.GetBox()))
+					{
+						checker = true;
+						break;
+					}
+			}
+			if (!checker)
+				_state = eSamusState::Stand;
+			else
+			{
+				box.SetSize(16, 16);
+				SetPosition(GetPosition().x, GetPosition().y - 16);
+				bCrouch = true;
+			}
+		}
+
+		
+		#pragma endregion
+		break;
 	//case eSamusState::JumpMoveAttack:
 	//	/**/
 	//	break;
@@ -284,7 +407,53 @@ void Samus::UpdateState(float deltatime)
 		break;
 	}
 
-	
+	if (_prevState != _state)
+	{
+		switch (_state)
+		{
+		case eSamusState::Stand:
+			if (!bCrouch)
+				sprite->SetAnimation("char_stand");
+			else
+				sprite->SetAnimation("char_roll");
+			break;
+		case eSamusState::StandAttack:
+			sprite->SetAnimation("char_stand_shoot");
+			break;
+		case eSamusState::StandLookUp:
+			break;
+		case eSamusState::StandLookUpAttack:
+			sprite->SetAnimation("char_shoot_up");
+			break;
+		case eSamusState::MovingOnGround:
+			sprite->SetAnimation("char_run");
+			break;
+		case eSamusState::MovingOnGroundAtack:
+			sprite->SetAnimation("char_run_shoot");
+			break;
+		case eSamusState::MovingOnGroundLookUp:
+			break;
+		case eSamusState::MovingOnGroundLookUpAttack:
+			sprite->SetAnimation("char_run_shoot_up");
+			break;
+		case eSamusState::Jump:
+			sprite->SetAnimation("char_jump");
+			break;
+		case eSamusState::JumpAttack:
+			break;
+		case eSamusState::JumpLookUp:
+			break;
+		case eSamusState::JumpLookUpAttack:
+			break;
+		case eSamusState::Santo:
+			sprite->SetAnimation("char_flip");
+			break;
+		case eSamusState::Rolling:
+			sprite->SetAnimation("char_roll");
+			break;
+
+		}
+	}
 }
 
 //Character Controller
@@ -299,15 +468,18 @@ void Samus::Move()
 	{
 		GetMoveComponent()->MoveRight();
 		sprite.get()->FlipRight();
+		bMoving = true;
 	}
 	else if (IsKeyDown(DIK_A))
 	{
 		GetMoveComponent()->MoveLeft();
 		sprite.get()->FlipLeft();
+		bMoving = true;
 	}
 	else 
 	{
 		GetMoveComponent()->IdleX();
+		bMoving = false;
 	}
 
 	if (IsKeyDown(DIK_SPACE))

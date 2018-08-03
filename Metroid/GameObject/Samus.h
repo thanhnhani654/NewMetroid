@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Creature.h"
 #include "../Controllable.h"
+#include "../Component/Collision.h"
 
 enum class eSamusState			// Bool Flying, Bool Moving, Bool LookUp, Bool Attacking
 {
@@ -20,7 +21,8 @@ enum class eSamusState			// Bool Flying, Bool Moving, Bool LookUp, Bool Attackin
 	Santo,						// Flying = true;	Moving = true;	LookUp = false;	Attacking = false;	in Special Condition and only change when previous State is Moving
 	//JumpMoveAttack,				// Flying = true;	Moving = true;	LookUp = false;	Attacking = true;
 	//JumpMoveLookUp,				// Flying = true;	Moving = true;	LookUp = true;	Attacking = false;
-	//JumpMoveLookUpAttack,		// Flying = true;	Moving = true;	LookUp = true;	Attacking = true;
+	//JumpMoveLookUpAttack,		// Flying = true;	Moving = true;	LookUp = true;	Attacking = true;4
+	Rolling,
 
 };
 
@@ -37,6 +39,7 @@ private:
 	bool bInput;
 
 	eSamusState _state;
+	eSamusState _prevState;
 
 	void UpdateState(float deltatime);
 	void Stand();
