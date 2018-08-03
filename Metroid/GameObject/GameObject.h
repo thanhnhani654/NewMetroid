@@ -154,7 +154,10 @@ public:
 	virtual void UpdateInput(float deltatime);
 	virtual void Update(float deltatime);
 	virtual void Draw();
-	virtual void OnCollision(GameObject* object) {}
+	virtual void OnCollision(GameObject* object, float collideTime, int normalX, int normalY) {}		//GameObject *object: Object va chạm với object gọi hàm
+																										//float collideTime : Thời gian xảy ra va chạm
+																										//int normalX/normalY: Hướng xảy ra va chạm
+
 	virtual void Destroy();							//Dùng để xóa những con trỏ bên trong
 
 	GameObject* FindObjectWithTag(eTag tag);

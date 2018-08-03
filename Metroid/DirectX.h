@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include "Sprite.h"
 #include "GameScene.h"
+#include "Component\Collision.h"
 
 class DirectX
 {

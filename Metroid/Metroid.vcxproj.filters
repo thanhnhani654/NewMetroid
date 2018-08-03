@@ -78,6 +78,9 @@
     <ClCompile Include="Component\Collision.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Tiles.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX.h">
@@ -107,9 +110,6 @@
     <ClInclude Include="GameObject\Creature.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Component\HPComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\Samus.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
@@ -117,6 +117,12 @@
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\Collision.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\HPComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Tiles.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>

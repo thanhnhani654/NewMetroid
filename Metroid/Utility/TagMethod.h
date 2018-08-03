@@ -7,7 +7,8 @@ using namespace std;
 
 enum eTag
 {
-	Player
+	PlayerTag,
+	TilesTag
 };
 
 class Tag

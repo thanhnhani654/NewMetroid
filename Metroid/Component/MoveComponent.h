@@ -2,11 +2,13 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <math.h>
+#include <iostream>
 
 class MoveComponent
 {
 private:
 	D3DXVECTOR2* position;
+	D3DXVECTOR2  prevPosition;
 	D3DXVECTOR2* velocity;
 	D3DXVECTOR2 acceleration;
 	float speed;
@@ -42,6 +44,18 @@ public:
 		acceleration.x = x;
 		acceleration.y = y;
 	}
+
+	void SetVelocity(D3DXVECTOR2 vec)
+	{
+		acceleration = vec;
+	}
+
+	void SetVelocity(float x, float y)
+	{
+		velocity->x = x;
+		velocity->y = y;
+	}
+
 
 	float GetSpeed()
 	{
@@ -106,4 +120,5 @@ public:
 	void TinhVanTocDuaTrenPhuongTrinhTheoThoiGian(float ptx, float pty);			//Điều kiện sử dụng là bGravity = false và không sử dụng bất kỳ hàm nào khác
 
 	void UpdateMovement(float deltatime);
+	void BugCatcher(D3DXVECTOR2 position);
 };

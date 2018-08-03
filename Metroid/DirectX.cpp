@@ -71,8 +71,8 @@ bool DirectX::Game_Initialize()
 void DirectX::GameLoop(float deltatime)
 {
 	UpdateInput(deltatime);
-	//CollisionUpdate(deltatime);
-	//CollisionProcess(deltatime);
+	Collision::getInstance()->BoxUpdater();
+	Collision::getInstance()->CollisionChecker(deltatime);
 	Update(deltatime);
 	this->DrawLoop();
 }

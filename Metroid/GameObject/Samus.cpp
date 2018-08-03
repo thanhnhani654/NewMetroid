@@ -7,6 +7,8 @@ void Samus::Initialize()
 	GetMoveComponent()->EnableGravity();
 	GetMoveComponent()->SetSpeed(150);
 
+	box.DynamicInitialize(this, 16, 32);
+
 	//Condition Initialize
 	bFlying = false;
 	bMoving = false;
@@ -29,11 +31,51 @@ void Samus::UpdateInput(float deltatime)
 void Samus::Update(float deltatime)
 {
 	GetMoveComponent()->UpdateMovement(deltatime);
+	this;
 }
 
 void Samus::Draw()
 {
 	Creature::Draw();
+}
+
+void Samus::OnCollision(GameObject* object, float collideTime, int normalX, int normalY)
+{
+	if (object->GetTagMethod()->isHasTag(eTag::TilesTag))
+	{
+		if (collideTime >= 0 || collideTime < 0.1)
+		{
+			if (collideTime < 0.1)
+				collideTime = 0;
+			float vecX = GetMoveComponent()->GetVelocity().x;
+			float vecY = GetMoveComponent()->GetVelocity().y;
+			if (normalX != 0)
+			{
+				vecX = collideTime * GetMoveComponent()->GetVelocity().x * 0.1;
+			}
+
+			if (normalY > 0)
+			{
+				vecY = collideTime * GetMoveComponent()->GetVelocity().y * 0.1;
+				//if (collideTime != 0)
+					//cout << "Va cham ben tren" << endl;
+			}
+
+			if (normalY < 0)
+			{
+				this;
+				vecY = collideTime * GetMoveComponent()->GetVelocity().y * 0.1;		
+				bFlying = false;
+				if (collideTime != 0)
+				{
+					//cout << "CollideTime: " << collideTime << "\tVeclocity: " << vecY << "\tPosition: " << GetPosition().y - 16 << "\tObject: " << object->GetPosition().y + 8 << endl;
+					//cout << "Va cham ben duoi" << endl;
+				}
+			}
+
+			GetMoveComponent()->SetVelocity(vecX, vecY);
+		}
+	}
 }
 
 void Samus::Destroy()
@@ -43,12 +85,24 @@ void Samus::OnKeyDown(int Keycode)
 {
 	switch (Keycode)
 	{
-	/*case DIK_A:
-		GetMoveComponent()->MoveLeft();
+	case DIK_SPACE:
+		//debug double jump
+		static int count = 0;
+		if (!bFlying)
+		{			
+			GetMoveComponent()->Jump();
+			
+			cout << "Jumping" << endl;
+			//////////////////////////
+			count++;
+			if (count > 1)
+				cout << "Error: Double Jump!!!" << endl;
+			//////////////////////////
+			bFlying = true;
+		}
+		else
+			count = 0;
 		break;
-	case DIK_D:
-		GetMoveComponent()->MoveRight();
-		break;*/
 	}
 }
 
@@ -251,8 +305,13 @@ void Samus::Move()
 		GetMoveComponent()->MoveLeft();
 		sprite.get()->FlipLeft();
 	}
-	else
+	else 
 	{
 		GetMoveComponent()->IdleX();
+	}
+
+	if (IsKeyDown(DIK_SPACE))
+	{
+		
 	}
 }

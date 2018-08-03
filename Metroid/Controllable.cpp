@@ -28,7 +28,7 @@ void Controllable::_InitKeyboard(HWND hWnd, HINSTANCE hInstance)
 		);
 	hr = di->CreateDevice(GUID_SysKeyboard, &Keyboard, NULL);
 	hr = Keyboard->SetDataFormat(&c_dfDIKeyboard);
-	hr = Keyboard->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	hr = Keyboard->SetCooperativeLevel(hWnd, DISCL_BACKGROUND | DISCL_EXCLUSIVE);
 
 	DIPROPDWORD dipdw;
 

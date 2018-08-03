@@ -47,6 +47,12 @@ public:
 		box.size.y = h;
 	}
 
+	void SetPosition()
+	{
+		box.position.x = gameObject->GetPosition().x - box.size.x / 2;
+		box.position.y = gameObject->GetPosition().y - box.size.y / 2;
+	}
+
 	void SetSize(float width, float height)
 	{
 		box.size.x = width;

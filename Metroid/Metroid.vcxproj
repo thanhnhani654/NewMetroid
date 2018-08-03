@@ -161,6 +161,7 @@
     <ClCompile Include="GameObject\Creature.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\Samus.cpp" />
+    <ClCompile Include="GameObject\Tiles.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pugixml-1.8\src\pugixml.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="GameObject\Creature.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\Samus.h" />
+    <ClInclude Include="GameObject\Tiles.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="pugixml-1.8\src\pugixml.hpp" />
     <ClInclude Include="Sprite.h" />

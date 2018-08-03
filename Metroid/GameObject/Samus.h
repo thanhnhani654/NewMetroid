@@ -53,6 +53,7 @@ public:
 	void UpdateInput(float deltatime);
 	void Update(float deltatime);
 	void Draw();
+	void OnCollision(GameObject* object, float collideTime, int normalX, int normalY);
 	void Destroy();							//Dùng để xóa những con trỏ bên trong
 
 	//Inherit From Controllable

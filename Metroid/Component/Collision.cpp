@@ -63,17 +63,25 @@ void Collision::AddCheckListBox(Box2D &object, float dist)
 			return;
 		}
 	}
-	_CheckListBox.insert(_CheckListBox.end() + 1, checkBox);
+	_CheckListBox.insert(_CheckListBox.end(), checkBox);
 }
 
-void Collision::doCollision(Box2D object)
+void Collision::doCollision(Box2D object, float deltatime)
 {
 	if (_CheckListBox.size() == 0)
 		return;
 
 	for (int i = 0; i < _CheckListBox.size(); i++)
 	{
-		object.getGameObject()->OnCollision(_CheckListBox[i].box.getGameObject());
+		if (!IsIntersection(GetBroadphaseBox(_CheckListBox[i].box, deltatime), GetBroadphaseBox(object, deltatime)))
+			continue;
+
+		float collideTime;
+		int normalX = 0;
+		int normalY = 0;
+		collideTime = GetCollideTime(object, _CheckListBox[i].box, &normalX, &normalY, deltatime) / deltatime;
+
+		object.getGameObject()->OnCollision(_CheckListBox[i].box.getGameObject(), collideTime, normalX, normalY);
 	}
 
 	_CheckListBox.clear();
@@ -95,25 +103,27 @@ void Collision::CollisionChecker(float deltatime)
 			if (!Box2D::listBox[ii].get().isEnable() || &Box2D::listBox[ii].get() == &Box2D::listBox[i].get())
 				continue;
 
-			// Kiem tra neu co the xay ra va cham trong tuong lai
-			// thi se dua vao danh sach cai box can xet
+			// Kiểm tra nếu có thể xảy ra va chạm trong tương lai
+			// Thì sẽ đưa vào danh sách các Box cần xét
 			if (!IsIntersection(GetBroadphaseBox(Box2D::listBox[ii].get(), deltatime), GetBroadphaseBox(Box2D::listBox[i].get(), deltatime)))
 				continue;
 
-			AddCheckListBox(Box2D::listBox[ii].get(), Distance(Box2D::listBox[i].get().GetBox(), Box2D::listBox[ii].get().GetBox()));
-
-			// Thuc hien va cham 
-			doCollision(Box2D::listBox[ii].get());
+			// Đưa vào danh sách các box cần xét theo thứ tự xét khoảng cách xa dần với nhân vật
+			AddCheckListBox(Box2D::listBox[ii].get(), Distance(Box2D::listBox[i].get().GetBox(), Box2D::listBox[ii].get().GetBox()));			
 		}
+		// Thuc hien va cham 
+		doCollision(Box2D::listBox[i].get(), deltatime);
 	}
 }
 
-float Collision::CollisionDetection(Box2D object1, Box2D object2, int* normalx, int* normaly, float deltatime)
+float Collision::GetCollideTime(Box2D object1, Box2D object2, int* normalx, int* normaly, float deltatime)
 {
 	D3DXVECTOR2 vec1 = object1.GetVelocity();
 	D3DXVECTOR2 vec2 = object2.GetVelocity();
 	vec1.x -= vec2.x;
 	vec1.y -= vec2.y;
+	vec1.x *= deltatime;
+	vec1.y *= deltatime;
 	Box box1 = object1.GetBox();
 	Box box2 = object2.GetBox();
 
@@ -188,4 +198,12 @@ float Collision::CollisionDetection(Box2D object1, Box2D object2, int* normalx, 
 	}
 
 	return tEntry;
+}
+
+void Collision::BoxUpdater()
+{
+	for (std::vector<reference_wrapper<Box2D>>::iterator it = Box2D::listBox.begin(); it != Box2D::listBox.end(); it++)
+	{
+		(*it).get().SetPosition();
+	}
 }
