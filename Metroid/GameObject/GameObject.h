@@ -34,8 +34,6 @@ private:
 		parentObject = &object;
 	}
 
-	static void DestroyProcess();					//Dùng để xóa object nào được đánh dấu tử
-
 public:
 	//Sprite
 	std::unique_ptr<Sprite> sprite;
@@ -160,6 +158,8 @@ public:
 
 	virtual void Destroy();							//Dùng để xóa những con trỏ bên trong
 
-	GameObject* FindObjectWithTag(eTag tag);
+	static GameObject* FindObjectWithTag(eTag tag);
+
+	static void DestroyProcess();					//Dùng để xóa object nào được đánh dấu tử
 
 };

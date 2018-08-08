@@ -7,7 +7,8 @@ void Samus::Initialize()
 	GetMoveComponent()->EnableGravity();
 	GetMoveComponent()->SetSpeed(150);
 
-	box.DynamicInitialize(this, 16, 32);
+	box.DynamicInitialize(this, 16, 26);
+	box.SetPivot(8, 16);
 
 	//Condition Initialize
 	bFlying = false;
@@ -17,6 +18,20 @@ void Samus::Initialize()
 	bCrouch = false;
 	bInput = true;
 	_state = eSamusState::Stand;
+	direction = eDirection::Left;
+	bHaveRocket = false;
+	bHaveFreezeBullet = false;
+
+	jumpTime = 0.5;
+	jumpSpan = jumpTime;
+
+	// Bullet Fire
+	_FireRate = 10;
+	_FireTime = 0;
+	_FirePos.x = 0;
+	_FirePos.y = 0;
+	_BulletType = eBulletType::Normal;
+	
 }
 
 void Samus::Ghost_Initialize(){}
@@ -30,7 +45,11 @@ void Samus::UpdateInput(float deltatime)
 
 void Samus::Update(float deltatime)
 {
+	Fire(deltatime);
+	//Update Movement
 	GetMoveComponent()->UpdateMovement(deltatime);
+	HighJump(deltatime);
+	//Update Animation
 	UpdateState(deltatime);
 	this;
 }
@@ -94,6 +113,7 @@ void Samus::OnKeyDown(int Keycode)
 			
 			cout << "Jumping" << endl;
 			bFlying = true;
+			bjumpRelease = false;
 		}
 
 		if (bCrouch)
@@ -105,6 +125,37 @@ void Samus::OnKeyDown(int Keycode)
 		{
 			bCrouch = true;
 		}
+		break;
+	case DIK_R:
+		switch (_BulletType)
+		{
+		case eBulletType::Normal:
+			if (bHaveRocket)
+				_BulletType = eBulletType::Rocket;
+			break;
+		case eBulletType::Rocket:
+			if (!bHaveFreezeBullet)
+				_BulletType = eBulletType::Normal;
+			else
+				_BulletType = eBulletType::Freeze;
+			break;
+		case eBulletType::Freeze:
+			if (bHaveRocket)
+				_BulletType = eBulletType::Rocket;
+			break;
+		}
+		break;
+	}
+}
+
+void Samus::OnKeyUp(int Keycode)
+{
+	switch (Keycode)
+	{
+	case DIK_SPACE:
+		bjumpRelease = true;
+		jumpSpan = jumpTime;
+		break;
 	}
 }
 
@@ -128,6 +179,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -145,6 +197,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -162,6 +215,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -179,6 +233,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -197,6 +252,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -214,6 +270,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -231,6 +288,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		break;
 	case eSamusState::MovingOnGroundLookUpAttack:
@@ -247,6 +305,7 @@ void Samus::UpdateState(float deltatime)
 		{
 			_state = eSamusState::Rolling;
 			box.SetSize(16, 16);
+			box.SetPivot(8, 8);
 		}
 		#pragma endregion
 		break;
@@ -318,7 +377,8 @@ void Samus::UpdateState(float deltatime)
 		if (!bFlying == false)
 		{
 			bool checker = false;
-			box.SetSize(16, 32);
+			box.SetSize(16, 26);
+			box.SetPivot(8, 16);
 			SetPosition(GetPosition().x, GetPosition().y + 16);
 			for (int i = 0; i < Box2D::listBox.size(); i++)
 			{
@@ -336,6 +396,7 @@ void Samus::UpdateState(float deltatime)
 			else
 			{
 				box.SetSize(16, 16);
+				box.SetPivot(8, 8);
 				SetPosition(GetPosition().x, GetPosition().y - 16);
 				bCrouch = true;
 			}
@@ -343,14 +404,16 @@ void Samus::UpdateState(float deltatime)
 		else if (!bAttack == false)
 		{
 			bool checker = false;
-			box.SetSize(16, 32);
+			box.SetSize(16, 26);
+			box.SetPivot(8, 16);
 			SetPosition(GetPosition().x, GetPosition().y + 16);
-			for (int i = 0; i < Box2D::listBox.size(); i++)
+			std::vector<Box2D*> templist = Box2D::listBox_Ptr;
+			for (int i = 0; i < templist.size(); i++)
 			{
-				if (&box == &Box2D::listBox[i].get())
+				if (&box == templist[i])
 					continue;
-				if (Box2D::listBox[i].get().getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
-					if (Collision::getInstance()->IsIntersection(Box2D::listBox[i].get().GetBox(), box.GetBox()))
+				if (templist[i]->getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
+					if (Collision::getInstance()->IsIntersection(templist[i]->GetBox(), box.GetBox()))
 					{
 						checker = true;
 						break;
@@ -361,6 +424,7 @@ void Samus::UpdateState(float deltatime)
 			else
 			{
 				box.SetSize(16, 16);
+				box.SetPivot(8, 8);
 				SetPosition(GetPosition().x, GetPosition().y - 16);
 				bCrouch = true;
 			}
@@ -368,14 +432,16 @@ void Samus::UpdateState(float deltatime)
 		else if (!bCrouch == true)
 		{
 			bool checker = false;
-			box.SetSize(16, 32);
+			box.SetSize(16, 26);
+			box.SetPivot(8, 16);
 			SetPosition(GetPosition().x, GetPosition().y + 16);
-			for (int i = 0; i < Box2D::listBox.size(); i++)
+			std::vector<Box2D*> templist = Box2D::listBox_Ptr;
+			for (int i = 0; i < templist.size(); i++)
 			{
-				if (&box == &Box2D::listBox[i].get())
+				if (&box == templist[i])
 					continue;
-				if (Box2D::listBox[i].get().getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
-					if (Collision::getInstance()->IsIntersection(Box2D::listBox[i].get().GetBox(), box.GetBox()))
+				if (templist[i]->getGameObject()->GetTagMethod()->isHasTag(eTag::TilesTag))
+					if (Collision::getInstance()->IsIntersection(templist[i]->GetBox(), box.GetBox()))
 					{
 						checker = true;
 						break;
@@ -386,6 +452,7 @@ void Samus::UpdateState(float deltatime)
 			else
 			{
 				box.SetSize(16, 16);
+				box.SetPivot(8, 8);
 				SetPosition(GetPosition().x, GetPosition().y - 16);
 				bCrouch = true;
 			}
@@ -460,6 +527,7 @@ void Samus::UpdateState(float deltatime)
 void Samus::ControllerUpdate()
 {
 	Move();
+
 }
 
 void Samus::Move()
@@ -469,21 +537,45 @@ void Samus::Move()
 		GetMoveComponent()->MoveRight();
 		sprite.get()->FlipRight();
 		bMoving = true;
+		direction = eDirection::Right;
 	}
 	else if (IsKeyDown(DIK_A))
 	{
 		GetMoveComponent()->MoveLeft();
 		sprite.get()->FlipLeft();
 		bMoving = true;
+		direction = eDirection::Left;
 	}
 	else 
 	{
 		GetMoveComponent()->IdleX();
 		bMoving = false;
 	}
+}
 
-	if (IsKeyDown(DIK_SPACE))
+void Samus::HighJump(float deltatime)
+{
+	if (!bjumpRelease && bFlying && jumpSpan > 0)
 	{
-		
+		jumpSpan -= deltatime;
+		float delta = jumpSpan >= 0 ? deltatime : deltatime + jumpSpan;
+
+		GetMoveComponent()->SetAcceleration(GetMoveComponent()->GetAcceleration().x, GetMoveComponent()->GetAcceleration().y + delta *500);
 	}
+}
+
+
+void Samus::Fire(float deltatime)
+{
+	bAttack = false;
+	if (bCrouch)
+		return;
+	if (!IsKeyDown(DIK_J))
+		return;
+	_FireTime += deltatime;
+	if (_FireTime < 1.0f / _FireRate)
+		return;
+	_FireTime = 0;
+	Bullet::CreateBullet(direction, _BulletType, _FirePos.x + GetPosition().x, _FirePos.y + GetPosition().y);
+	//bAttack = true;
 }

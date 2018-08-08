@@ -25,10 +25,14 @@ bool Collision::IsIntersection(Box object1, Box object2)
 Box Collision::GetBroadphaseBox(Box2D &object, float delta)
 {
 	Box temp;
-	temp.position.x = object.GetVelocity().x == 0 ? object.GetBox().position.x : object.GetBox().position.x + object.GetVelocity().x * delta;
-	temp.position.y = object.GetVelocity().y == 0 ? object.GetBox().position.y : object.GetBox().position.y + object.GetVelocity().y * delta;
-	temp.size.x = object.GetBox().size.x;
-	temp.size.y = object.GetBox().size.y;
+	Box temp2 = object.GetBox();
+	D3DXVECTOR2 tempv = object.GetVelocity();
+	//temp.position.x = object.GetVelocity().x == 0 ? object.GetBox().position.x : object.GetBox().position.x + object.GetVelocity().x * delta;
+	//temp.position.y = object.GetVelocity().y == 0 ? object.GetBox().position.y : object.GetBox().position.y + object.GetVelocity().y * delta;
+	temp.position.x = tempv.x == 0 ? temp2.position.x : temp2.position.x + tempv.x * delta;
+	temp.position.y = tempv.y == 0 ? temp2.position.y : temp2.position.y + tempv.y * delta;
+	temp.size.x = temp2.size.x;
+	temp.size.y = temp2.size.y;
 
 	return temp;
 }
@@ -89,31 +93,75 @@ void Collision::doCollision(Box2D object, float deltatime)
 
 void Collision::CollisionChecker(float deltatime)
 {
-	for (int i = 0; i < Box2D::listBox.size(); i++)
+	static int count = 0;
+	//std::vector<reference_wrapper<Box2D>> templist = Box2D::listBox;
+	std::vector<Box2D*> templist2 = Box2D::listBox_Ptr;
+	for (int i = 0; i < templist2.size(); i++)
 	{
 		// Next nếu Box được lấy đã bị disable hoặc nó thuộc loại Static vì Static không di chuyển nên không cần xét nó với Box khác,
 		// chỉ cần xét vật di chuyển với nó là được
-		if (!Box2D::listBox[i].get().isEnable() || Box2D::listBox[i].get().GetType() == eBoxType::Static)
-			continue;
-
+		//if (count > 3)
+		//	break;
+		if (templist2[i]->GetType() == eBoxType::Static)
+			continue;		
 		// Xét Box thứ 2
-		for (int ii = 0; ii < Box2D::listBox.size(); ii++)
+		for (int ii = 0; ii < templist2.size(); ii++)
 		{
+		//	if (count > 2)
+		//		break;
+			count++;
+			
 			// Nếu Box thứ 2 đã bị disable hoặc trùng với Box1 thì next
-			if (!Box2D::listBox[ii].get().isEnable() || &Box2D::listBox[ii].get() == &Box2D::listBox[i].get())
+			/*if (!templist[ii].get().isEnable())
+				continue;*/
+			if (i == ii)
+				continue;
+			// Kiểm tra nếu có thể xảy ra va chạm trong tương lai
+			// Thì sẽ đưa vào danh sách các Box cần xét
+			if (!IsIntersection(GetBroadphaseBox(*templist2[ii], deltatime), GetBroadphaseBox(*templist2[i], deltatime)))
+				continue;
+			/*if (!IsIntersection(templist2[ii]->GetBox(), templist2[i]->GetBox()))
+				continue;
+			*/
+			// Đưa vào danh sách các box cần xét theo thứ tự xét khoảng cách xa dần với nhân vật
+			AddCheckListBox(*templist2[ii], Distance(templist2[i]->GetBox(), templist2[ii]->GetBox()));
+		}
+		// Thuc hien va cham 		
+		doCollision(*templist2[i], deltatime);
+	}
+	/*for (std::vector<reference_wrapper<Box2D>>::iterator i = templist.begin(); i != templist.end(); i++)
+	{
+		// Next nếu Box được lấy đã bị disable hoặc nó thuộc loại Static vì Static không di chuyển nên không cần xét nó với Box khác,
+		// chỉ cần xét vật di chuyển với nó là được
+		//if (count > 3)
+		//	break;
+		if (!(*i).get().isEnable() || (*i).get().GetType() == eBoxType::Static)
+			continue;
+		// Xét Box thứ 2
+		for (std::vector<reference_wrapper<Box2D>>::iterator ii = templist.begin(); ii != templist.end(); ii++)
+		{
+			//	if (count > 2)
+			//		break;
+			count++;
+
+			// Nếu Box thứ 2 đã bị disable hoặc trùng với Box1 thì next
+			if (!(*ii).get().isEnable() || &(*ii).get() == &(*i).get())
 				continue;
 
 			// Kiểm tra nếu có thể xảy ra va chạm trong tương lai
 			// Thì sẽ đưa vào danh sách các Box cần xét
-			if (!IsIntersection(GetBroadphaseBox(Box2D::listBox[ii].get(), deltatime), GetBroadphaseBox(Box2D::listBox[i].get(), deltatime)))
+			if (!IsIntersection(GetBroadphaseBox((*ii).get(), deltatime), GetBroadphaseBox((*i).get(), deltatime)))
 				continue;
 
 			// Đưa vào danh sách các box cần xét theo thứ tự xét khoảng cách xa dần với nhân vật
-			AddCheckListBox(Box2D::listBox[ii].get(), Distance(Box2D::listBox[i].get().GetBox(), Box2D::listBox[ii].get().GetBox()));			
+			AddCheckListBox((*ii).get(), Distance((*i).get().GetBox() , (*ii).get().GetBox()));
 		}
-		// Thuc hien va cham 
-		doCollision(Box2D::listBox[i].get(), deltatime);
-	}
+		// Thuc hien va cham 		
+		doCollision((*i).get(), deltatime);
+	}*/
+	//if (count != 0)
+	//std::cout << "CollisionLoop = " << count << endl;
+	count = 0;
 }
 
 float Collision::GetCollideTime(Box2D object1, Box2D object2, int* normalx, int* normaly, float deltatime)
@@ -202,8 +250,12 @@ float Collision::GetCollideTime(Box2D object1, Box2D object2, int* normalx, int*
 
 void Collision::BoxUpdater()
 {
-	for (std::vector<reference_wrapper<Box2D>>::iterator it = Box2D::listBox.begin(); it != Box2D::listBox.end(); it++)
+	/*for (std::vector<reference_wrapper<Box2D>>::iterator it = Box2D::listBox.begin(); it != Box2D::listBox.end(); it++)
 	{
 		(*it).get().SetPosition();
+	}*/
+	for (std::vector<Box2D*>::iterator it = Box2D::listBox_Ptr.begin(); it != Box2D::listBox_Ptr.end(); it++)
+	{
+		(*it)->SetPosition();
 	}
 }

@@ -7,6 +7,7 @@
 struct Box
 {
 	D3DXVECTOR2 position;
+	D3DXVECTOR2 pivot;
 	D3DXVECTOR2 size;			//x = width, y = height
 };
 
@@ -27,92 +28,27 @@ private:
 	
 public:
 	static std::vector<reference_wrapper<Box2D>> listBox;
-
-	#pragma region GetSet
-	GameObject* getGameObject()
-	{
-		return gameObject;
-	}
-
-	Box GetBox()
-	{
-		return box;
-	}
-
-	void SetBox(float &x, float &y, float w, float h)
-	{
-		box.position.x = x;
-		box.position.y = y;
-		box.size.x = w;
-		box.size.y = h;
-	}
-
-	void SetPosition()
-	{
-		box.position.x = gameObject->GetPosition().x - box.size.x / 2;
-		box.position.y = gameObject->GetPosition().y - box.size.y / 2;
-	}
-
-	void SetSize(float width, float height)
-	{
-		box.size.x = width;
-		box.size.y = height;
-	}
-
-	D3DXVECTOR2 GetPosition()
-	{
-		return gameObject->GetPosition();
-	}
-
-	D3DXVECTOR2 GetVelocity()
-	{
-		return gameObject->GetVelocity();
-	}
-
-	D3DXVECTOR2 GetSize()
-	{
-		return box.size;
-	}
-
-	void SetDeleted()
-	{
-		deleted = true;
-	}
-
-	bool IsDeleted()
-	{
-		return deleted;
-	}
-
-	void Enable()
-	{
-		bEnable = true;
-	}
-
-	void Disable()
-	{
-		bEnable = false;
-	}
-
-	bool isEnable()
-	{
-		return bEnable;
-	}
-
-	void SetStaticType()
-	{
-		type = eBoxType::Static;
-	}
-
-	void SetDynamicType()
-	{
-		type - eBoxType::Dynamic;
-	}
-
-	eBoxType GetType()
-	{
-		return type;
-	}
+	static std::vector<Box2D*> listBox_Ptr;
+#pragma region GetSet
+	GameObject* getGameObject();
+	Box GetBox();
+	void SetBox(float &x, float &y, float w, float h);
+	void SetPosition();
+	void SetPivot(D3DXVECTOR2 pivot);
+	void SetPivot(float x, float y);
+	void SetSize(float width, float height);
+	D3DXVECTOR2 GetPosition();
+	D3DXVECTOR2 GetVelocity();
+	D3DXVECTOR2 GetSize();
+	void SetDeleted();
+	bool IsDeleted();
+	void Destroy();
+	void Enable();
+	void Disable();
+	bool isEnable();
+	void SetStaticType();
+	void SetDynamicType();
+	eBoxType GetType();
 
 #pragma endregion
 

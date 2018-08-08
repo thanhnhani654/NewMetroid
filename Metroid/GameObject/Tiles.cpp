@@ -5,6 +5,7 @@ void Tiles::Initialize(string tileName)
 	GameObject::Initialize();
 	sprite.get()->SetAnimation(tileName);
 	box.StaticInitialize(this, 16, 16);
+	box.SetPivot(8, 8);
 	GetTagMethod()->AddTag(eTag::TilesTag);
 }
 

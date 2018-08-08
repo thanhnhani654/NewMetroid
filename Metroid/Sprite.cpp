@@ -103,8 +103,8 @@ void Sprite::Render(float X, float Y)
 	D3DXMatrixIdentity(&mt);
 	mt._11 = 1.0f;
 	mt._22 = -1.0f;
-	mt._41 = 0;
-	mt._42 = 320 + 25 + 16;
+	mt._41 = 0 -Camera::getInstance()->GetPosition().x;
+	mt._42 = 320 + 25 + 16 +Camera::getInstance()->GetPosition().y;
 	D3DXVECTOR4 vp_pos;
 
 	D3DXVec3Transform(&vp_pos, &position, &mt);

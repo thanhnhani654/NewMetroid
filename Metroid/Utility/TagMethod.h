@@ -8,7 +8,9 @@ using namespace std;
 enum eTag
 {
 	PlayerTag,
-	TilesTag
+	TilesTag,
+	ItemTag,
+	BulletTag,
 };
 
 class Tag

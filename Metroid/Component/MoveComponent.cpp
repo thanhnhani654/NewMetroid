@@ -4,11 +4,13 @@ void MoveComponent::Initialize(D3DXVECTOR2* position, D3DXVECTOR2* velocity)
 {
 	this->position = position;
 	this->velocity = velocity;
-	speed = 5;
+	this->acceleration.x = 0;
+	this->acceleration.y = 0;
+	speed = 100;
 	limitedSpeed = 1000;
 	bGravity = false;
 	gravity = 10;
-	jumpPower = 80;
+	jumpPower = 70;
 }
 
 void MoveComponent::MoveUp()
@@ -20,7 +22,7 @@ void MoveComponent::MoveUp()
 void MoveComponent::MoveDown()
 {
 	if (!bGravity)
-		velocity->y = speed;
+		velocity->y = -speed;
 }
 
 void MoveComponent::Jump()
@@ -78,7 +80,7 @@ void MoveComponent::UpdateMovement(float deltatime)
 
 	
 
-	BugCatcher(*position);
+	//BugCatcher(*position);
 	if (bGravity)
 	{
 		if (acceleration.y > -gravity)

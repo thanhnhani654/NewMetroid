@@ -2,6 +2,7 @@
 #include "Creature.h"
 #include "../Controllable.h"
 #include "../Component/Collision.h"
+#include "Bullet.h"
 
 enum class eSamusState			// Bool Flying, Bool Moving, Bool LookUp, Bool Attacking
 {
@@ -38,12 +39,31 @@ private:
 	bool bCrouch;
 	bool bInput;
 
+	//Some order varible
+	eDirection direction;
+
 	eSamusState _state;
 	eSamusState _prevState;
 
 	void UpdateState(float deltatime);
 	void Stand();
-	void Jump();
+
+	// Thực hiện nhảy cao
+	void HighJump(float deltatime);
+	bool bjumpRelease;						// Kiểm tra phím Jump có được thả kể từ khi bấm
+	float jumpTime;							// Thời gian giữ phím Jump để được độ cao tối đa
+	float jumpSpan;							// Thời gian đếm ngược cho đến khi đạt độ cao tối đa
+	
+	// Fire Bullet
+	bool bHaveRocket;
+	bool bHaveFreezeBullet;
+	float _FireRate;						// Số viên đạn bắn được trong 1s
+	float _FireTime;
+	eBulletType _BulletType;
+	D3DXVECTOR2 _FirePos;					// Vị trí viên đạn xuất hiện
+	std::vector<Bullet*> bulletsVector;
+	void Fire(float deltatime);
+
 	void Move();
 	void ControllerUpdate();
 
@@ -61,6 +81,7 @@ public:
 
 	//Inherit From Controllable
 	void OnKeyDown(int Keycode);
+	void OnKeyUp(int Keycode);
 
 	#pragma endregion
 

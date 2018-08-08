@@ -4,6 +4,8 @@
 #include <time.h>
 #include "Controllable.h"
 
+#define BSHOWFPS TRUE
+
 using namespace std;
 
 int GameLoop(DirectX& directX);
@@ -54,10 +56,13 @@ int GameLoop(DirectX& directX)
 {
 	//Tính DeltaTime
 	float deltatime = GetDeltaTime();
-	ShowFPS(false, deltatime);
+	ShowFPS(BSHOWFPS, deltatime);
 
-	if (deltatime < 0.0333)
-		Sleep((0.0333 - deltatime)*1000);
+	//limitFPS
+	/*if (deltatime < 0.0333)
+		Sleep((0.0333 - deltatime)*1000);*/
+	//if (deltatime < 0.025)
+	//	Sleep((0.025 - deltatime) * 1000);
 	
 
 	// Chạy game
@@ -127,7 +132,7 @@ void ShowFPS(bool show, float deltatime)
 	time += deltatime;
 	if (time >= 1)
 	{
-		cout << countFPS << endl;
+		cout << countFPS << "\t" << deltatime << endl;
 		time = 0;
 		countFPS = 0;
 	}

@@ -13,7 +13,7 @@ void GameObject::Initialize()
 
 void GameObject::Ghost_Initialize()
 {
-
+	sprite = std::make_unique<Sprite>();
 }
 
 void GameObject::UpdateInput(float deltatime)
@@ -34,11 +34,14 @@ void GameObject::Draw()
 
 void GameObject::Destroy()
 {
-	for (int i = 0; i < childObject.size(); i++)
+	if (childObject.size() != 0)
 	{
-		childObject[i].get().SetDeleted();
+		for (int i = 0; i < childObject.size(); i++)
+		{
+			childObject[i].get().SetDeleted();
+		}
+		childObject.clear();
 	}
-	childObject.clear();
 
 	if (sprite != nullptr)
 		sprite.reset();
