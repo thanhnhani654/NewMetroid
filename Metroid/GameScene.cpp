@@ -5,8 +5,8 @@ void GameScene::Initialize()
 	samus.Initialize();
 	samus.SetPosition(16*35, 100);
 
-	tile.Initialize("Tile_0");
-	tile.SetPosition(0, 16);
+	item.Initialize(eItem::RocketItem);
+	item.SetPosition(16 * 48, 16*3);
 	//b->SetPosition(16 * 33, 100);
 
 	/*for (int i = 0; i < 20; i++)
@@ -58,7 +58,7 @@ void GameScene::Update(float deltatime)
 void GameScene::Draw()
 {
 	samus.Draw();
-	tile.Draw();
+	item.Draw();
 	Bullet::DrawBullets();
 	for (int i = 0; i < object.size(); i++)
 	{

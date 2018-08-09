@@ -4,16 +4,17 @@
 #include "GameObject\Tiles.h"
 #include "GameObject\Camera.h"
 #include "GameObject\Bullet.h"
+#include "GameObject\Item.h"
 #include <fstream>
 #include <vector>
-
 using namespace std;
 
 class GameScene
 {
 private:
 	Samus samus;
-	Tiles tile;
+
+	Item item;
 	std::vector<Tiles*> object;
 public:
 

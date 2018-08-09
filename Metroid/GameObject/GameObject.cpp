@@ -69,12 +69,14 @@ void GameObject::DestroyProcess()
 		if ((*it).get().deleted)
 		{
 			(*it).get().Destroy();
+			mark = 1;
 			break;
 		}
 	}
 	if (mark != (-1))
 	{
 		listObject.erase(it);
+		listObject.shrink_to_fit();
 		DestroyProcess();
 	}
 }

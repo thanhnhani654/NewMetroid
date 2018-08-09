@@ -156,6 +156,7 @@
     <ClCompile Include="Component\Collision.cpp" />
     <ClCompile Include="Component\HPComponent.cpp" />
     <ClCompile Include="Component\MoveComponent.cpp" />
+    <ClCompile Include="Component\ScneActor.cpp" />
     <ClCompile Include="Controllable.cpp" />
     <ClCompile Include="DirectX.cpp" />
     <ClCompile Include="GameObject\Bullet.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Component\Collision.h" />
     <ClInclude Include="Component\HPComponent.h" />
     <ClInclude Include="Component\MoveComponent.h" />
+    <ClInclude Include="Component\SceneActor.h" />
     <ClInclude Include="Controllable.h" />
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="GameObject\Bullet.h" />

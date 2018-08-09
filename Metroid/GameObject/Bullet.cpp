@@ -42,7 +42,10 @@ void Bullet::Ghost_Initialize(eDirection direction, eBulletType type, float x, f
 		_LifeSpan = 0.3f;
 		break;
 	case Rocket:
-		sprite.get()->SetAnimation("rocket");
+		if (direction != eDirection::Top)
+			sprite.get()->SetAnimation("rocket");
+		else
+			sprite.get()->SetAnimation("rocket_up");
 		_Damage = 1.0f;
 		_LifeSpan = 1.0f;
 		break;

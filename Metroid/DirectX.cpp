@@ -70,6 +70,11 @@ bool DirectX::Game_Initialize()
 // Hàm túm hết mấy cái vòng lặp game bỏ vào đây
 void DirectX::GameLoop(float deltatime)
 {
+	SceneActor::getInstance()->TimeCount(deltatime);
+	if (SceneActor::getInstance()->IsPause())
+	{
+		return;
+	}
 	UpdateInput(deltatime);
 	Collision::getInstance()->BoxUpdater();
 	Collision::getInstance()->CollisionChecker(deltatime);

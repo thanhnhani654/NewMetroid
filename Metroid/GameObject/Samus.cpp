@@ -41,6 +41,8 @@ void Samus::UpdateInput(float deltatime)
 	if (bInput)
 		_ProcessKeyBoard();
 	ControllerUpdate();
+	//Update Animation
+	UpdateState(deltatime);
 }
 
 void Samus::Update(float deltatime)
@@ -49,8 +51,7 @@ void Samus::Update(float deltatime)
 	//Update Movement
 	GetMoveComponent()->UpdateMovement(deltatime);
 	HighJump(deltatime);
-	//Update Animation
-	UpdateState(deltatime);
+	
 	this;
 }
 
@@ -61,6 +62,14 @@ void Samus::Draw()
 
 void Samus::OnCollision(GameObject* object, float collideTime, int normalX, int normalY)
 {
+	if (object->GetTagMethod()->isHasTag(eTag::ItemTag))
+	{
+		cout << "eatItem" << endl;
+		if (((Item*)(object))->GetItemType() == eItem::RocketItem)
+			bHaveRocket = true;
+		object->SetDeleted();
+		SceneActor::getInstance()->PauseFor(2.0f);
+	}
 	if (object->GetTagMethod()->isHasTag(eTag::TilesTag))
 	{
 		if (collideTime >= 0 || collideTime < 0.1)
@@ -527,7 +536,14 @@ void Samus::UpdateState(float deltatime)
 void Samus::ControllerUpdate()
 {
 	Move();
-
+	if (IsKeyDown(DIK_W))
+	{
+		bLookUp = true;
+	}
+	else
+	{
+		bLookUp = false;
+	}
 }
 
 void Samus::Move()
@@ -564,7 +580,6 @@ void Samus::HighJump(float deltatime)
 	}
 }
 
-
 void Samus::Fire(float deltatime)
 {
 	bAttack = false;
@@ -576,6 +591,9 @@ void Samus::Fire(float deltatime)
 	if (_FireTime < 1.0f / _FireRate)
 		return;
 	_FireTime = 0;
-	Bullet::CreateBullet(direction, _BulletType, _FirePos.x + GetPosition().x, _FirePos.y + GetPosition().y);
+	if (!bLookUp)
+		Bullet::CreateBullet(direction, _BulletType, _FirePos.x + GetPosition().x, _FirePos.y + GetPosition().y);
+	else
+		Bullet::CreateBullet(eDirection::Top, _BulletType, _FirePos.x + GetPosition().x, _FirePos.y + GetPosition().y);
 	//bAttack = true;
 }

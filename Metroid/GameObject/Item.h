@@ -2,16 +2,23 @@
 #include "GameObject.h"
 #include "../Component/Box2D.h"
 
+enum eItem
+{
+	HealthPackItem,
+	RocketItem,
+	FreezeItem,
+};
+
 class Item : public GameObject
 {
 private:
-	string _itemName;
+	eItem _Item;
+	Box2D box;
 public:
 
-	#pragma region GetSet
-	bool isHasName(string name);
-	#pragma endregion
+	eItem GetItemType();
 
-	virtual void Initialize();
-	virtual void Draw();
+	void Initialize(eItem item);
+	void Destroy();
+	void Draw();
 };

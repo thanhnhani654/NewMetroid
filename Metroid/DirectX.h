@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "GameScene.h"
 #include "Component\Collision.h"
+#include "Component\SceneActor.h"
 
 class DirectX
 {

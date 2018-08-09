@@ -3,6 +3,8 @@
 #include "../Controllable.h"
 #include "../Component/Collision.h"
 #include "Bullet.h"
+#include "../Component/SceneActor.h"
+#include "Item.h"
 
 enum class eSamusState			// Bool Flying, Bool Moving, Bool LookUp, Bool Attacking
 {
