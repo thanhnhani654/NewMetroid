@@ -32,6 +32,8 @@ enum class eSamusState			// Bool Flying, Bool Moving, Bool LookUp, Bool Attackin
 class Samus : public Creature, Controllable
 {
 private:
+	
+	static Samus* instance;
 
 	// Điều kiện để một state hoạt động
 	bool bFlying;
