@@ -89,4 +89,6 @@ public:
 
 	#pragma endregion
 
+	
+	static Samus* getInstance();
 };

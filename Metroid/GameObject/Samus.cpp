@@ -3,7 +3,7 @@
 void Samus::Initialize()
 {
 	Creature::Initialize();
-	sprite.get()->SetAnimation("char_run");
+	sprite.get()->SetAnimation("char_stand");
 	GetMoveComponent()->EnableGravity();
 	GetMoveComponent()->SetSpeed(150);
 
@@ -35,6 +35,16 @@ void Samus::Initialize()
 }
 
 void Samus::Ghost_Initialize(){}
+
+
+Samus* Samus::instance;
+
+Samus* Samus::getInstance()
+{
+	if (instance == nullptr)
+		instance = new Samus();
+	return instance;
+}
 
 void Samus::UpdateInput(float deltatime)
 {
