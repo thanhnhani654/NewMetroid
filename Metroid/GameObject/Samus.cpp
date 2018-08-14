@@ -4,7 +4,7 @@ void Samus::Initialize()
 {
 	Creature::Initialize();
 	sprite.get()->SetAnimation("char_stand");
-	//sggr
+	
 	GetMoveComponent()->EnableGravity();
 	GetMoveComponent()->SetSpeed(150);
 
