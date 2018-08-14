@@ -81,8 +81,8 @@ void Collision::doCollision(Box2D object, float deltatime)
 			continue;
 
 		float collideTime;
-		int normalX = 0;
-		int normalY = 0;
+		int normalX = 0;		// -1: Va chạm bên trái			1: Va chạm bên phải
+		int normalY = 0;		// -1: Va chạm bên dưới			1: Va chạm bên trên
 		collideTime = GetCollideTime(object, _CheckListBox[i].box, &normalX, &normalY, deltatime) / deltatime;
 
 		object.getGameObject()->OnCollision(_CheckListBox[i].box.getGameObject(), collideTime, normalX, normalY);

@@ -16,6 +16,7 @@ private:
 	float gravity;					//Khi bGravity bằng true thì acceleration.y = gravity
 	float limitedSpeed;				//Nên là số nguyên
 	float jumpPower;
+	bool bOnAcceleration;
 public:
 
 	#pragma region GetSet
@@ -105,6 +106,11 @@ public:
 	void SetJumpPower(float jp)
 	{
 		jumpPower = jp;
+	}
+
+	void OnAcceleration()
+	{
+		bOnAcceleration = true;
 	}
 
 #pragma endregion

@@ -56,21 +56,21 @@ void Sprite::Initialize()
 	//Load Image
 	_Image  = LoadSprite(TEXT("Resources/map.png"), 240, 320);
 	_Image2 = LoadSprite(TEXT("Resources/Character.bmp"), 574, 1009);
-	//_Image3 = ...
+	_Image3 = LoadSprite(TEXT("Resources/Enemies.bmp"), 561, 337);
 	//_Image4 = ...
 	//_Image5 = ...
 
 	//Load Sprite
 	LoadSpritePos("Resources/Sprite_Tiles_Sheet.xml");
 	LoadSpritePos("Resources/Sprite_Character_Sheet.xml");
-	//LoadSpritePos("Resources/...");
+	LoadSpritePos("Resources/Sprite_Enemy_Sheet.xml");
 	//LoadSpritePos("Resources/...");
 	//LoadSpritePos("Resources/...");
 
 	//Load Animation
 	LoadAnimClips("Resources/Animation_Clip_Tiles.xml", _Image);
 	LoadAnimClips("Resources/Animation_Clip_Character.xml", _Image2);
-	//LoadAnimClips("Resources/...", _Image3);
+	LoadAnimClips("Resources/Animation_Clip_Enemy.xml", _Image3);
 	//LoadAnimClips("Resources/...", _Image4);
 	//LoadAnimClips("Resources/...", _Image5);
 	
