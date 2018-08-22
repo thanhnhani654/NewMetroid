@@ -93,14 +93,14 @@ void MoveComponent::UpdateMovement(float deltatime)
 
 	if (bOnAcceleration)
 	{
-		velocity->x += acceleration.x;
+		velocity->x += acceleration.x * deltatime;
 		if (abs(velocity->x) > limitedSpeed)
 			if (velocity->x > 0)
 				velocity->x = limitedSpeed;
 			else
 				velocity->x = -limitedSpeed;
 
-		velocity->y += acceleration.y;
+		velocity->y += acceleration.y * deltatime;
 		if (abs(velocity->y) > limitedSpeed)
 			if (velocity->y > 0)
 				velocity->y = limitedSpeed;

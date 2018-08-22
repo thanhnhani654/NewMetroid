@@ -9,7 +9,7 @@ void Zoomer::Initialize()
 	speed = 200;
 	GetMoveComponent()->SetSpeed(speed - 100);
 	GetMoveComponent()->OnAcceleration();
-	GetMoveComponent()->SetGravity(500);
+	GetMoveComponent()->SetGravity(500000);
 	GetMoveComponent()->SetLimitedSpeed(speed);
 
 	box.DynamicInitialize(this, 16, 16);

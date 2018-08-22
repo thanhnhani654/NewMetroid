@@ -69,7 +69,12 @@ private:
 	void Move();
 	void ControllerUpdate();
 
+	
+
 public:
+	static Samus* instance;
+	static Samus* getInstance();
+
 	#pragma region Inherit
 
 	//Inherit From Creature
@@ -87,4 +92,6 @@ public:
 
 	#pragma endregion
 
+	bool IsRolling();
+	bool IsFlying();
 };

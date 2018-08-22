@@ -1,9 +1,18 @@
 ﻿#include "Samus.h"
 
+Samus* Samus::instance;
+
+Samus* Samus::getInstance()
+{
+	if (instance == nullptr)
+		instance = new Samus();
+	return instance;
+}
+
 void Samus::Initialize()
 {
 	Creature::Initialize();
-	sprite.get()->SetAnimation("char_run");
+	sprite.get()->SetAnimation("char_stand");
 	GetMoveComponent()->EnableGravity();
 	GetMoveComponent()->SetSpeed(150);
 
@@ -596,4 +605,14 @@ void Samus::Fire(float deltatime)
 	else
 		Bullet::CreateBullet(eDirection::Top, _BulletType, _FirePos.x + GetPosition().x, _FirePos.y + GetPosition().y);
 	//bAttack = true;
+}
+
+bool Samus::IsRolling()
+{
+	return bCrouch;
+}
+
+bool Samus::IsFlying()
+{
+	return bFlying;
 }

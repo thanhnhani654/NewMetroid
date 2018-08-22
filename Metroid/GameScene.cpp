@@ -3,10 +3,13 @@
 void GameScene::Initialize()
 {
 	samus.Initialize();
-	samus.SetPosition(16*45, 100);
+	samus.instance = &samus;
+	samus.SetPosition(16*45, 16*3);
+	
 
 	item.Initialize(eItem::RocketItem);
-	item.SetPosition(16 * 48, 16*8);
+	item.SetPosition(16 * 65, 16*8);
+
 	//b->SetPosition(16 * 33, 100);
 
 	/*for (int i = 0; i < 20; i++)
@@ -37,8 +40,12 @@ void GameScene::Initialize()
 		newObject->SetPosition(300+30, i*16);
 		object.push_back(newObject);
 	}*/
+	//Mobs
 	zoomer.Initialize();
 	zoomer.SetPosition(16 * 46, 16*2);
+	reo.Initialize();
+	reo.SetPosition(16 *60, 16 * 11);
+
 	MapLoader();
 }
 
@@ -51,7 +58,12 @@ void GameScene::UpdateInput(float deltatime)
 void GameScene::Update(float deltatime)
 {
 	samus.Update(deltatime);
+
+	//Mobs
 	zoomer.Update(deltatime);
+	reo.Update(deltatime);
+
+	//Static Update
 	Bullet::UpdateBullets(deltatime);
 	Camera::getInstance()->Update(deltatime, samus.GetPosition());
 	GameObject::DestroyProcess();
@@ -61,7 +73,11 @@ void GameScene::Update(float deltatime)
 void GameScene::Draw()
 {
 	samus.Draw();
+
+	//Mobs
 	zoomer.Draw();
+	reo.Draw();
+
 	item.Draw();
 	Bullet::DrawBullets();
 	for (int i = 0; i < object.size(); i++)

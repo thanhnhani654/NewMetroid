@@ -6,6 +6,7 @@
 #include "GameObject\Bullet.h"
 #include "GameObject\Item.h"
 #include "GameObject\Zoomer.h"
+#include "GameObject\Reo.h"
 #include <fstream>
 #include <vector>
 using namespace std;
@@ -14,10 +15,13 @@ class GameScene
 {
 private:
 	Samus samus;
-	Zoomer zoomer;
+	
 
 	Item item;
 	std::vector<Tiles*> object;
+
+	Zoomer zoomer;
+	Reo reo;
 public:
 
 	void Initialize();

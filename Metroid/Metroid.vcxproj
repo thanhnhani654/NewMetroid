@@ -164,6 +164,7 @@
     <ClCompile Include="GameObject\Creature.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\Item.cpp" />
+    <ClCompile Include="GameObject\Reo.cpp" />
     <ClCompile Include="GameObject\Samus.cpp" />
     <ClCompile Include="GameObject\Tiles.cpp" />
     <ClCompile Include="GameObject\Zoomer.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="GameObject\Creature.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\Item.h" />
+    <ClInclude Include="GameObject\Reo.h" />
     <ClInclude Include="GameObject\Samus.h" />
     <ClInclude Include="GameObject\Tiles.h" />
     <ClInclude Include="GameObject\Zoomer.h" />

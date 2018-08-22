@@ -96,6 +96,9 @@
     <ClCompile Include="GameObject\Zoomer.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Reo.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX.h">
@@ -153,6 +156,9 @@
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Zoomer.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Reo.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
