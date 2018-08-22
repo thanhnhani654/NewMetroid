@@ -50,7 +50,7 @@ private:
 	bool test;	
 
 	//Properties
-	const float _ChaseSpeedX = 180;				// Gia tốc tiếp cận theo X
+	const float _ChaseSpeedX = 100;				// Gia tốc tiếp cận theo X
 	const float _ChaseSpeedY = 100;				// Gia tốc tiếp cận theo Y
 	const float _SpeedY = -180;
 

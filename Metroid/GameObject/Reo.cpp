@@ -89,6 +89,8 @@ void Reo::StartChase()
 
 	//Lấy tọa độ của Samus
 	_ClimaxPoint = Samus::getInstance()->GetPosition();
+	
+	_ClimaxPoint.y = bPerfectChase ? _ClimaxPoint.y - 32 : _ClimaxPoint.y;
 	//Tính thời gian để Reo chạm Samus theo phương Y
 	float ty = _Sy / -120;
 	//Tính gia tốc cần để khi Reo chạm Samus theo phương Y thì cũng sẽ chạm Samus theo phương X
@@ -135,6 +137,12 @@ void Reo::ChangeState()
 				ComeBack();
 				return;
 			}
+		}
+		if (GetPosition().y < _ClimaxPoint.y)
+		{
+			state = QuayVe;
+			ComeBack();
+			std::cout << "at ClimaxPoint" << endl;
 		}
 		if (bLanding)
 		{
@@ -187,6 +195,8 @@ void Reo::ResetIdle()
 	GetMoveComponent()->SetVelocity(0, 0);
 	GetMoveComponent()->SetAcceleration(0, 0);
 	test = false;
+	_ClimaxPoint.x = 0;
+	_ClimaxPoint.y = 0;
 }
 
 void Reo::FindSamus()

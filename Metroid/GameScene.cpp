@@ -44,7 +44,7 @@ void GameScene::Initialize()
 	zoomer.Initialize();
 	zoomer.SetPosition(16 * 46, 16*2);
 	reo.Initialize();
-	reo.SetPosition(16 *60, 16 * 11);
+	reo.SetPosition(16 *52, 16 * 11);
 
 	MapLoader();
 }
